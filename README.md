@@ -75,6 +75,6 @@ DELETE: deletes the journal with id from the database</p>
 
 ## Authors
 
-- Elijah Daniel - Backend developer
-- Edafe Oke - Mobile interface developer
+- [Elijah Daniel - Backend developer](https://github.com/ElijahDanie)
+- [Edafe Oke - Mobile interface developer](https://github.com/edafeoke)
 - [Njagi Ndungo - Documentation, Flutter & Speech Developer](https://github.com/enzonjagi)
