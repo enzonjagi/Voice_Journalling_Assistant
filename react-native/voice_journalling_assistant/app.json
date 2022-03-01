@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "voice_journalling_assistant",
+    "slug": "voice_journalling_assistant",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "voice_journalling_assistant"
+}
