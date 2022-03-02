@@ -25,7 +25,7 @@
 
 #### Login/Auth Samples
 
-![Login](assets/images/SampleLogin.png)
+![Login](assets/images/CompleteLoginProcess.png)
 
 #### Splash Screen Samples
 
