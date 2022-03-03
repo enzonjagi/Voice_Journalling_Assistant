@@ -1,0 +1,3 @@
+[submodule "Voice_Journalling_Assistant_Server"]
+	path = Voice_Journalling_Assistant_Server
+	url = https://github.com/Elijahdanie/Voice_Journalling_Assistant_Server
