@@ -1,7 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'dart:core';
-
 import 'package:highlight_text/highlight_text.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -68,6 +66,12 @@ class _SpeechScreenState extends State<SpeechScreen> {
     ),
   };
 
+  dynamic _date;
+  final Map<String, String> _recordedJournal = {
+    'Title': 'ShouldbeDatetime',
+    'Text': ' ',
+  };
+
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
@@ -83,18 +87,18 @@ class _SpeechScreenState extends State<SpeechScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%'),
+        title: Text('Record New Journal'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: _isListening,
+        animate: true, //_isListening,
         glowColor: Theme.of(context).primaryColor,
         endRadius: 75.0,
         duration: const Duration(milliseconds: 2000),
         repeatPauseDuration: const Duration(milliseconds: 100),
         repeat: true,
         child: FloatingActionButton(
-          onPressed: _listen,
+          onPressed: () {}, //_listen,
           child: Icon(_isListening ? Icons.mic : Icons.mic_none),
         ),
       ),
@@ -127,6 +131,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
+            _date = DateTime.now();
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
             }

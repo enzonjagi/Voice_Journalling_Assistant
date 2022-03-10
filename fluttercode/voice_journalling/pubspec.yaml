@@ -38,9 +38,10 @@ dependencies:
   # Local cache
   # shared_preferences: ^0.5.3+4
   # speech_recognition: ^0.3.0+1
-  speech_to_text: ^2.3.0
+  speech_to_text: ^5.4.3
   highlight_text: ^0.7.2
-  avatar_glow: ^1.2.0
+  avatar_glow: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:

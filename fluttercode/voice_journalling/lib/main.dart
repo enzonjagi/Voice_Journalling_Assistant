@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:voice_journalling/auth/login.dart';
+import 'package:voice_journalling/journal_list.dart';
 import 'package:voice_journalling/speech_screen.dart';
 
 void main() {
@@ -12,10 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Voice Journal',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SpeechScreen(),
+      home: Login(),
       debugShowCheckedModeBanner: false,
     );
   }
