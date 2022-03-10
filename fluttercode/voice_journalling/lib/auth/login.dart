@@ -8,20 +8,14 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[50],
       body: Container(
           padding: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 130.0),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  'Voice Journal',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 70,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                padding: const EdgeInsets.only(top: 100.0),
+                child: Image.asset('assets/logo.png'),
               ),
               Spacer(
                 flex: 10,
