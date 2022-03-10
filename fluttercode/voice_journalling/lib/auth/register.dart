@@ -53,7 +53,7 @@ class Register extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
