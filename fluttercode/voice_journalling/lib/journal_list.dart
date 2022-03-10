@@ -15,19 +15,33 @@ class _JournalHomeState extends State<JournalHome> {
   // Should contain a get request to the journals api for all journals
   // and order them by date or id
   List<ListItem> items = [];
+  final List dummyList = List.generate(1000, (index) {
+    return {
+      "id": index,
+      "title": "Journal Entry $index",
+      "subtitle": "Journal $index"
+    };
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.black,
-        leading: Icon(Icons.record_voice_over),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.home),
+        ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          ),
           IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(Icons.logout),
-          )
+          ),
         ],
         title: Text(
           'Journals',
@@ -45,22 +59,23 @@ class _JournalHomeState extends State<JournalHome> {
         },
         child: Icon(Icons.add),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        /*child: ListView.builder(
-            itemCount: items.length,
-            // confirm how this should work
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('This'),
-                subtitle: Text('That'),
-              );
-            },
-          ),*/
-        child: Center(
-            child: SingleChildScrollView(
-          child: Container(),
-        )),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: dummyList.length,
+          itemBuilder: (context, index) => Card(
+            elevation: 6,
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Text(dummyList[index]["id"].toString()),
+                backgroundColor: Colors.blueGrey,
+              ),
+              title: Text(dummyList[index]["title"]),
+              subtitle: Text(dummyList[index]["subtitle"]),
+              trailing: Icon(Icons.delete),
+            ),
+          ),
+        ),
       ),
     );
   }
