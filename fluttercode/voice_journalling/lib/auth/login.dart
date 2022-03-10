@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:voice_journalling/auth/register.dart';
-import 'package:voice_journalling/journal_list.dart';
+import 'package:voice_journalling/journalling/journal_list.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);

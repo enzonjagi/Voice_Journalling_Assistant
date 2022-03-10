@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:voice_journalling/sample_journalling.dart';
-import 'package:voice_journalling/speech_screen.dart';
+import 'package:voice_journalling/journalling/sample_journalling.dart';
+import 'package:voice_journalling/journalling/speech_screen.dart';
 
 import 'list_items.dart';
 
