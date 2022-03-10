@@ -89,7 +89,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
       appBar: AppBar(
         title: Text('Record New Journal'),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: AvatarGlow(
         animate: true, //_isListening,
         glowColor: Theme.of(context).primaryColor,
@@ -115,6 +115,27 @@ class _SpeechScreenState extends State<SpeechScreen> {
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Cancel',
+            icon: IconButton(
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+          ),
+          /*BottomNavigationBarItem(
+            icon: IconButton(icon: Icon(Icons.mic), onPressed: () {}),
+          ),*/
+          BottomNavigationBarItem(
+            label: 'Save',
+            icon: IconButton(icon: Icon(Icons.save), onPressed: () {}),
+          ),
+        ],
+        fixedColor: Colors.blueGrey,
+        selectedLabelStyle: TextStyle(fontSize: 20),
       ),
     );
   }
