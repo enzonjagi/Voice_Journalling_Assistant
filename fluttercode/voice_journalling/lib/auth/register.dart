@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:voice_journalling/auth/auth_functions.dart';
 import 'package:voice_journalling/auth/login.dart';
 import 'package:voice_journalling/auth/validator.dart';
+import 'package:voice_journalling/journalling/journal_list.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -15,137 +16,171 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final _formKey = GlobalKey<FormState>();
-
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
+  final _registerFormKey = GlobalKey<FormState>();
 
   final _nameTextController = TextEditingController();
-
   final _emailTextController = TextEditingController();
-
   final _passwordTextController = TextEditingController();
+
+  final _focusName = FocusNode();
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
 
   bool _isProcessing = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.green[50],
-      resizeToAvoidBottomInset: false,
-      body: Container(
-          padding: EdgeInsets.fromLTRB(30.0, 30.0, 30.0, 130.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 100.0),
-                child: Image.asset('assets/logo.png'),
-              ),
-              // ignore: prefer_const_constructors
-              Spacer(
-                flex: 10,
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _nameTextController,
-                      decoration: InputDecoration(
-                        hintText: 'username',
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: _emailTextController,
-                      validator: (value) =>
-                          Validator.validateEmail(email: value!),
-                      decoration: InputDecoration(
-                        hintText: 'email',
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'password',
-                        contentPadding: EdgeInsets.all(10),
-                      ),
-                      controller: _passwordTextController,
-                      obscureText: true,
-                      validator: (value) =>
-                          Validator.validatePassword(password: value!),
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        _focusName.unfocus();
+        _focusEmail.unfocus();
+        _focusPassword.unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.green[50],
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 100.0),
+                  child: Image.asset('assets/logo.png'),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  setState(() {
-                    _isProcessing = true;
-                  });
-
-                  if (_formKey.currentState!.validate()) {
-                    User? user = await FireAuth.registerUsingEmailPassword(
-                      name: _nameTextController.text,
-                      email: _emailTextController.text,
-                      password: _passwordTextController.text,
-                    );
-
-                    setState(() {
-                      _isProcessing = false;
-                    });
-
-                    if (user != null) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => Login()),
-                      );
-                    }
-                  }
-                },
-                child: Text(
-                  'Sign up',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Spacer(
+                  flex: 10,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Registered?'),
-                  TextButton(
-                    style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
+                Form(
+                  key: _registerFormKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        controller: _nameTextController,
+                        focusNode: _focusName,
+                        validator: (value) => Validator.validateName(
+                          name: value!,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Name",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 16.0),
+                      TextFormField(
+                        controller: _emailTextController,
+                        focusNode: _focusEmail,
+                        validator: (value) => Validator.validateEmail(
+                          email: value!,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Email",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16.0),
+                      TextFormField(
+                        controller: _passwordTextController,
+                        focusNode: _focusPassword,
+                        obscureText: true,
+                        validator: (value) => Validator.validatePassword(
+                          password: value!,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          errorBorder: UnderlineInputBorder(
+                            borderRadius: BorderRadius.circular(6.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 32.0),
+                      _isProcessing
+                          ? CircularProgressIndicator()
+                          : Column(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      _isProcessing = true;
+                                    });
+
+                                    if (_registerFormKey.currentState!
+                                        .validate()) {
+                                      User? user = await FireAuth
+                                          .registerUsingEmailPassword(
+                                        name: _nameTextController.text,
+                                        email: _emailTextController.text,
+                                        password: _passwordTextController.text,
+                                      );
+
+                                      setState(() {
+                                        _isProcessing = false;
+                                      });
+
+                                      if (user != null) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()),
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Text(
+                                    'Sign up',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Registered?'),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        foregroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.blue),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'Login',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                    ],
                   ),
-                ],
-              )
-            ],
-          )),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

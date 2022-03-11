@@ -41,8 +41,8 @@ class _JournalHomeState extends State<JournalHome> {
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
             },
             icon: Icon(Icons.logout),
           ),
