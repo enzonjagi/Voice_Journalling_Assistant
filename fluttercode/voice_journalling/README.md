@@ -1,16 +1,42 @@
-# voice_journalling
+# Voice_Journalling_Assistant
 
-A new Flutter project.
+<p>A mobile-based journaling application, intended to address mental health issues by providing users with an opportunity to speak out about their challenges, while at the same time storing a journal of these events using speech to text technology</p>
 
-## Getting Started
+## MVP(Minimum Viable Product)
 
-This project is a starting point for a Flutter application.
+### Architecture
 
-A few resources to get you started if this is your first Flutter project:
+![Architecture](assets/images/arch.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### User Stories
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- As Tandiwe, a remote-based SEO writer, I want to have a conversation at the end of the day, so I can relief my mind of the rollercoaster of events that transpired.
+- As Mwangi, a bachelor in Nairobi city, I want to journal my experience in dating, so I can see what might be going wrong or right in the experience.
+- As Mohammed, a banking cyber security expert, I want assurance that my data is secure, so that I can avoid a leak of potentially sensitive information from my work journals
+- As Simi, a consultant constantly travelling the world, I want to arrange my thoughts just before bed, so that I can wake up in the morning to sort out unresolved matters.
+- As Samantha, a non-tech savvy individual, I need to be directed on how to create journals, so that I can start journaling on the application.
+- As S’bu, a successful businessman, I want to easily login and access my consolidated thoughts, so that I can speed up my decision-making process.
+
+### Data Modelling
+
+![Data Modelling](assets/images/dm.png)
+
+### Mockups
+
+#### Login/Auth Samples
+
+![Login](assets/images/CompleteLoginProcess.png)
+
+#### Splash Screen Samples
+
+![Splash Screen](assets/images/journalling.png)
+
+#### App Conversation
+
+![Conversation](assets/images/conversation.png)
+
+## Authors
+
+- [Elijah Daniel - Backend developer](https://github.com/ElijahDanie)
+- [Edafe Oke - Mobile interface developer](https://github.com/edafeoke)
+- [Njagi Ndungo - Documentation, Flutter & Speech Developer](https://github.com/enzonjagi)
