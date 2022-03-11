@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:voice_journalling/journalling/sample_journalling.dart';
 import 'package:voice_journalling/journalling/speech_screen.dart';
@@ -5,7 +8,8 @@ import 'package:voice_journalling/journalling/speech_screen.dart';
 import 'list_items.dart';
 
 class JournalHome extends StatefulWidget {
-  const JournalHome({Key? key}) : super(key: key);
+  const JournalHome({Key? key, required this.user}) : super(key: key);
+  final User user;
 
   @override
   State<JournalHome> createState() => _JournalHomeState();
@@ -37,8 +41,8 @@ class _JournalHomeState extends State<JournalHome> {
             icon: Icon(Icons.search),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
             },
             icon: Icon(Icons.logout),
           ),
