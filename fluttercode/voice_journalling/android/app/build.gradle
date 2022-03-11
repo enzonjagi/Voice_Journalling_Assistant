@@ -57,3 +57,8 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+rootProject.ext {
+  set('FlutterFire', [
+    FirebaseSDKVersion: '29.0.4'
+  ])
+}
