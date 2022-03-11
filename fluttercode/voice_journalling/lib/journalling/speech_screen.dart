@@ -91,14 +91,14 @@ class _SpeechScreenState extends State<SpeechScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: AvatarGlow(
-        animate: true, //_isListening,
+        animate: _isListening,
         glowColor: Theme.of(context).primaryColor,
         endRadius: 75.0,
         duration: const Duration(milliseconds: 2000),
         repeatPauseDuration: const Duration(milliseconds: 100),
         repeat: true,
         child: FloatingActionButton(
-          onPressed: () {}, //_listen,
+          onPressed: _listen,
           child: Icon(_isListening ? Icons.mic : Icons.mic_none),
         ),
       ),

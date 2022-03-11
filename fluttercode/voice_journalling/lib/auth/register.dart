@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,8 +7,14 @@ import 'package:voice_journalling/auth/auth_functions.dart';
 import 'package:voice_journalling/auth/login.dart';
 import 'package:voice_journalling/auth/validator.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
 
   Future<FirebaseApp> _initializeFirebase() async {
@@ -17,8 +23,11 @@ class Register extends StatelessWidget {
   }
 
   final _nameTextController = TextEditingController();
+
   final _emailTextController = TextEditingController();
+
   final _passwordTextController = TextEditingController();
+
   bool _isProcessing = false;
 
   @override
@@ -99,11 +108,8 @@ class Register extends StatelessWidget {
                     });
 
                     if (user != null) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => Login(),
-                        ),
-                        ModalRoute.withName('/'),
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => Login()),
                       );
                     }
                   }
@@ -142,6 +148,11 @@ class Register extends StatelessWidget {
           )),
     );
   }
-
-  void setState(Null Function() param0) {}
 }
+/*Scaffold(
+      backgroundColor: Colors.green[50],
+      resizeToAvoidBottomInset: false,
+Padding(
+                padding: const EdgeInsets.only(top: 100.0),
+                child: Image.asset('assets/logo.png'),
+              ), */

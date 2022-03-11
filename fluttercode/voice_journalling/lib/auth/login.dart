@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,8 +8,14 @@ import 'package:voice_journalling/auth/register.dart';
 import 'package:voice_journalling/auth/validator.dart';
 import 'package:voice_journalling/journalling/journal_list.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
   Future<FirebaseApp> _initializeFirebase() async {
@@ -20,6 +26,7 @@ class Login extends StatelessWidget {
   }
 
   final _emailTextController = TextEditingController();
+
   final _passwordTextController = TextEditingController();
 
   @override
@@ -86,8 +93,9 @@ class Login extends StatelessWidget {
                             if (user != null) {
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        JournalHome(user: user)),
+                                    builder: (context) => JournalHome(
+                                          user: user,
+                                        )),
                               );
                             }
                           }
