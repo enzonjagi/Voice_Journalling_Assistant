@@ -103,6 +103,13 @@ class _JournalHomeState extends State<JournalHome> {
                 elevation: 6,
                 margin: EdgeInsets.all(10),
                 child: ListTile(
+                  leading: IconButton(
+                    icon: Icon(Icons.read_more),
+                    onPressed: () {
+                      //TODO work on opening a single journal entry
+                    },
+                  ),
+                  minVerticalPadding: 20,
                   title: Text(_datetime),
                   subtitle: Text(data['text']),
                   trailing: IconButton(
