@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:voice_journalling/journalling/sample_journalling.dart';
 import 'package:voice_journalling/journalling/speech_screen.dart';
+import 'package:timeago/timeago.dart';
 
 import 'list_items.dart';
 
@@ -18,6 +20,11 @@ class JournalHome extends StatefulWidget {
 class _JournalHomeState extends State<JournalHome> {
   // Should contain a get request to the journals api for all journals
   // and order them by date or id
+  late DateTime _date;
+  late String _datetime;
+  final _auth = FirebaseAuth.instance;
+  final Stream<QuerySnapshot> _journalsStream =
+      FirebaseFirestore.instance.collection('journals').snapshots();
   List<ListItem> items = [];
   final List dummyList = List.generate(1000, (index) {
     return {
@@ -26,6 +33,12 @@ class _JournalHomeState extends State<JournalHome> {
       "subtitle": "Journal $index"
     };
   });
+
+  void logout() {
+    _auth.signOut();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +55,7 @@ class _JournalHomeState extends State<JournalHome> {
           ),
           IconButton(
             onPressed: () async {
-              await FirebaseAuth.instance.signOut();
+              logout();
             },
             icon: Icon(Icons.logout),
           ),
@@ -63,23 +76,51 @@ class _JournalHomeState extends State<JournalHome> {
         },
         child: Icon(Icons.add),
       ),
-      body: SafeArea(
-        child: ListView.builder(
-          itemCount: dummyList.length,
-          itemBuilder: (context, index) => Card(
-            elevation: 6,
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              leading: CircleAvatar(
-                child: Text(dummyList[index]["id"].toString()),
-                backgroundColor: Colors.blueGrey,
-              ),
-              title: Text(dummyList[index]["title"]),
-              subtitle: Text(dummyList[index]["subtitle"]),
-              trailing: Icon(Icons.delete),
-            ),
-          ),
-        ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _journalsStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              _date = data['date'].toDate();
+              _datetime = '' +
+                  _date.year.toString() +
+                  '-' +
+                  _date.month.toString() +
+                  '-' +
+                  _date.day.toString();
+
+              return Card(
+                elevation: 6,
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  leading: IconButton(
+                    icon: Icon(Icons.read_more),
+                    onPressed: () {
+                      //TODO work on opening a single journal entry
+                    },
+                  ),
+                  minVerticalPadding: 20,
+                  title: Text(_datetime),
+                  subtitle: Text(data['text']),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:highlight_text/highlight_text.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -28,6 +30,9 @@ class SpeechScreen extends StatefulWidget {
 }
 
 class _SpeechScreenState extends State<SpeechScreen> {
+  final _fireStore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
   final Map<String, HighlightedWord> _highlights = {
     'flutter': HighlightedWord(
       onTap: () => print('flutter'),
@@ -75,12 +80,26 @@ class _SpeechScreenState extends State<SpeechScreen> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
+  late String date;
   double _confidence = 1.0;
 
   @override
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
+  }
+
+  //get the current logged in user
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -131,7 +150,23 @@ class _SpeechScreenState extends State<SpeechScreen> {
           ),*/
           BottomNavigationBarItem(
             label: 'Save',
-            icon: IconButton(icon: Icon(Icons.save), onPressed: () {}),
+            icon: IconButton(
+                icon: Icon(Icons.save),
+                onPressed: () async {
+                  //should add data to a new journal entry collection
+                  // there's a high chance it will add initial value of _text
+                  await _fireStore
+                      .collection('journals')
+                      .add({
+                        'date': _date,
+                        'text': _text,
+                      })
+                      .then((value) => print("Journal Added"))
+                      .catchError(
+                          (error) => print("Failed to add journal: $error"));
+
+                  Navigator.pop(context);
+                }),
           ),
         ],
         fixedColor: Colors.blueGrey,
