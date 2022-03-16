@@ -117,7 +117,15 @@ class _WalkthroughItemState extends State<WalkthroughItem> {
                 ),
               ),
             ),
-          )
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Login()));
+            },
+            child: Text('Skip'),
+          ),
+          SizedBox(height: 10)
         ],
       ),
     );
