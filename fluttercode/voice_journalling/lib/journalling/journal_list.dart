@@ -122,7 +122,9 @@ class _JournalHomeState extends State<JournalHome> {
                   subtitle: Text(data['text']),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO Delete the journal entry from firebase
+                    },
                   ),
                 ),
               );
