@@ -106,7 +106,7 @@ class _JournalHomeState extends State<JournalHome> {
                   leading: IconButton(
                     icon: Icon(Icons.read_more),
                     onPressed: () {
-                      //TODO work on opening a single journal entry
+                      //Opens a single journal entry
                       Navigator.push(
                         context,
                         MaterialPageRoute(
