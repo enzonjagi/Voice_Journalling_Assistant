@@ -106,7 +106,15 @@ class _JournalHomeState extends State<JournalHome> {
                   leading: IconButton(
                     icon: Icon(Icons.read_more),
                     onPressed: () {
-                      //TODO work on opening a single journal entry
+                      //Opens a single journal entry
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => JournalScreen(
+                                  text: data['text'],
+                                  date: _datetime,
+                                )),
+                      );
                     },
                   ),
                   minVerticalPadding: 20,
@@ -114,13 +122,46 @@ class _JournalHomeState extends State<JournalHome> {
                   subtitle: Text(data['text']),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                      //TODO Delete the journal entry from firebase
+                    },
                   ),
                 ),
               );
             }).toList(),
           );
         },
+      ),
+    );
+  }
+}
+
+class JournalScreen extends StatelessWidget {
+  const JournalScreen({Key? key, required this.text, required this.date})
+      : super(key: key);
+  final String text;
+  final String date;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //TODO work on the custom journal interface
+      appBar: AppBar(
+        title: Text(
+          date,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(
+          text,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontSize: 34,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       ),
     );
   }
