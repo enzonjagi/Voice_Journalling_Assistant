@@ -41,15 +41,12 @@ class _RegisterState extends State<Register> {
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
+              scrollDirection: Axis.vertical,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
+                  padding: const EdgeInsets.only(top: 50.0),
                   child: Image.asset('assets/logo.png'),
-                ),
-                Spacer(
-                  flex: 10,
                 ),
                 Form(
                   key: _registerFormKey,

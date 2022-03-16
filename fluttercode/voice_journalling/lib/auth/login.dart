@@ -59,15 +59,12 @@ class _LoginState extends State<Login> {
             if (snapshot.connectionState == ConnectionState.done) {
               return Padding(
                 padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 100.0),
+                      padding: const EdgeInsets.only(top: 50.0),
                       child: Image.asset('assets/logo.png'),
-                    ),
-                    Spacer(
-                      flex: 10,
                     ),
                     Form(
                       key: _formKey,
@@ -89,7 +86,7 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          //SizedBox(height: 8.0),
                           TextFormField(
                             controller: _passwordTextController,
                             focusNode: _focusPassword,
@@ -121,6 +118,7 @@ class _LoginState extends State<Login> {
                                             password:
                                                 _passwordTextController.text,
                                           );
+                                          //TODO fix this block to make login button redirect to JournalHome() successfully
                                           if (user != null) {
                                             Navigator.of(context)
                                                 .pushReplacement(
@@ -131,6 +129,7 @@ class _LoginState extends State<Login> {
                                                       )),
                                             );
                                           }
+                                          print("No user registered");
                                         }
                                       },
                                       child: Text(

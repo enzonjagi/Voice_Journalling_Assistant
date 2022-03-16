@@ -145,7 +145,7 @@ class JournalScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO work on the custom journal card
+      //TODO work on the custom journal interface
       appBar: AppBar(
         title: Text(
           date,
