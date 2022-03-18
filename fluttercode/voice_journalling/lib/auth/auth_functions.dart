@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class FireAuth {
   //check if user is logged in
-  static Future<User?> checkauthstate({
+  Future<User?> checkauthstate({
     required String name,
     required String email,
     required String password,
@@ -23,7 +23,7 @@ class FireAuth {
   }
 
   //verrify email address
-  static Future<User?> verifyEmail({
+  Future<User?> verifyEmail({
     required String name,
     required String email,
     required String password,

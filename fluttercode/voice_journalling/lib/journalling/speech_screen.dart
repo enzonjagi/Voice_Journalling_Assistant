@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,60 +35,22 @@ class _SpeechScreenState extends State<SpeechScreen> {
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late User loggedInUser;
-  final Map<String, HighlightedWord> _highlights = {
-    'flutter': HighlightedWord(
-      onTap: () => print('flutter'),
-      textStyle: const TextStyle(
-        color: Colors.blue,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'voice': HighlightedWord(
-      onTap: () => print('voice'),
-      textStyle: const TextStyle(
-        color: Colors.green,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'subscribe': HighlightedWord(
-      onTap: () => print('subscribe'),
-      textStyle: const TextStyle(
-        color: Colors.red,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'like': HighlightedWord(
-      onTap: () => print('like'),
-      textStyle: const TextStyle(
-        color: Colors.blueAccent,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-    'comment': HighlightedWord(
-      onTap: () => print('comment'),
-      textStyle: const TextStyle(
-        color: Colors.green,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  };
 
   dynamic _date;
-  final Map<String, String> _recordedJournal = {
-    'Title': 'ShouldbeDatetime',
-    'Text': ' ',
-  };
 
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
   late String date;
   double _confidence = 1.0;
+  //check who is the current user
+  late User? user;
 
   @override
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
+    user = _auth.currentUser;
   }
 
   //get the current logged in user
@@ -160,6 +124,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                       .add({
                         'date': _date,
                         'text': _text,
+                        'user_email': user!.email.toString(),
                       })
                       .then((value) => print("Journal Added"))
                       .catchError(

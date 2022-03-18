@@ -23,16 +23,17 @@ class _JournalHomeState extends State<JournalHome> {
   late DateTime _date;
   late String _datetime;
   final _auth = FirebaseAuth.instance;
+  //check who is the current user
+  late User? user;
+  @override
+  void initState() {
+    // TODO: implement initState
+    user = _auth.currentUser;
+    super.initState();
+  }
+
   final Stream<QuerySnapshot> _journalsStream =
       FirebaseFirestore.instance.collection('journals').snapshots();
-  List<ListItem> items = [];
-  final List dummyList = List.generate(1000, (index) {
-    return {
-      "id": index,
-      "title": "Journal Entry $index",
-      "subtitle": "Journal $index"
-    };
-  });
 
   void logout() {
     _auth.signOut();
@@ -91,6 +92,7 @@ class _JournalHomeState extends State<JournalHome> {
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
+
               _date = data['date'].toDate();
               _datetime = '' +
                   _date.year.toString() +
@@ -98,7 +100,6 @@ class _JournalHomeState extends State<JournalHome> {
                   _date.month.toString() +
                   '-' +
                   _date.day.toString();
-
               return Card(
                 elevation: 6,
                 margin: EdgeInsets.all(10),
@@ -120,12 +121,12 @@ class _JournalHomeState extends State<JournalHome> {
                   minVerticalPadding: 20,
                   title: Text(_datetime),
                   subtitle: Text(data['text']),
-                  trailing: IconButton(
+                  /*trailing: IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
                       //TODO Delete the journal entry from firebase
                     },
-                  ),
+                  ),*/
                 ),
               );
             }).toList(),
