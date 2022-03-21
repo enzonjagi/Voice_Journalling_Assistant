@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, prefer_const_constructors_in_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,11 @@ class _RegisterState extends State<Register> {
   final _nameTextController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
+  final _fireStore = FirebaseFirestore.instance;
+
+  late String _email;
+  late String _name;
+  late String _password;
 
   final _focusName = FocusNode();
   final _focusEmail = FocusNode();
@@ -126,14 +132,29 @@ class _RegisterState extends State<Register> {
                                       setState(() {
                                         _isProcessing = false;
                                       });
+                                      await _fireStore
+                                          .collection('user')
+                                          .add({
+                                            'name': _nameTextController.text,
+                                          })
+                                          .then((value) {})
+                                          .catchError((error) {
+                                            /*print(
+                                              "Failed to add journal: $error");*/
+                                          });
 
-                                      if (user != null) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()),
+                                      );
+                                    }
+
+                                    /*if (user != null) {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) => Login()),
                                         );
-                                      }
-                                    }
+                                      }*/
                                   },
                                   child: Text(
                                     'Sign up',

@@ -23,6 +23,9 @@ class _LoginState extends State<Login> {
 
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
+  late String _email;
+  late String _name;
+  late String _password;
 
   bool _isProcessing = false;
 
@@ -111,6 +114,9 @@ class _LoginState extends State<Login> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () async {
+                                        /*setState(() {
+                                          _isProcessing = true;
+                                        });*/
                                         if (_formKey.currentState!.validate()) {
                                           User? user = await FireAuth
                                               .signInUsingEmailPassword(
@@ -118,6 +124,9 @@ class _LoginState extends State<Login> {
                                             password:
                                                 _passwordTextController.text,
                                           );
+                                          setState(() {
+                                            _isProcessing = false;
+                                          });
                                           //TODO fix this block to make login button redirect to JournalHome() successfully
                                           if (user != null) {
                                             Navigator.of(context)
@@ -129,7 +138,6 @@ class _LoginState extends State<Login> {
                                                       )),
                                             );
                                           }
-                                          print("No user registered");
                                         }
                                       },
                                       child: Text(
