@@ -138,7 +138,6 @@ class _LoginState extends State<Login> {
                                                       )),
                                             );
                                           }
-                                          print("No user registered");
                                         }
                                       },
                                       child: Text(

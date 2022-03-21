@@ -77,62 +77,88 @@ class _JournalHomeState extends State<JournalHome> {
         },
         child: Icon(Icons.add),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _journalsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+      body: StreamBuilder(
+          stream: _auth.authStateChanges(),
+          builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+            if (snapshot.hasData) {
+              return StreamBuilder<QuerySnapshot>(
+                stream: _journalsStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong');
+                  }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("Loading");
+                  }
+                  if (snapshot.hasData) {
+                    return ListView(
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
 
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-
-              _date = data['date'].toDate();
-              _datetime = '' +
-                  _date.year.toString() +
-                  '-' +
-                  _date.month.toString() +
-                  '-' +
-                  _date.day.toString();
-              return Card(
-                elevation: 6,
-                margin: EdgeInsets.all(10),
-                child: ListTile(
-                  leading: IconButton(
-                    icon: Icon(Icons.read_more),
-                    onPressed: () {
-                      //Opens a single journal entry
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => JournalScreen(
-                                  text: data['text'],
-                                  date: _datetime,
-                                )),
-                      );
-                    },
-                  ),
-                  minVerticalPadding: 20,
-                  title: Text(_datetime),
-                  subtitle: Text(data['text']),
-                  /*trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      //TODO Delete the journal entry from firebase
-                    },
-                  ),*/
-                ),
+                        _date = data['date'].toDate();
+                        _datetime = '' +
+                            _date.year.toString() +
+                            '-' +
+                            _date.month.toString() +
+                            '-' +
+                            _date.day.toString();
+                        if (data['user_email'] != user!.email.toString()) {
+                          return Visibility(
+                            visible: false,
+                            child: Text(
+                              'Not your journal',
+                            ),
+                          );
+                        }
+                        return Card(
+                          elevation: 6,
+                          margin: EdgeInsets.all(10),
+                          child: ListTile(
+                            leading: IconButton(
+                              icon: Icon(Icons.read_more),
+                              onPressed: () {
+                                //Opens a single journal entry
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => JournalScreen(
+                                            text: data['text'],
+                                            date: _datetime,
+                                          )),
+                                );
+                              },
+                            ),
+                            minVerticalPadding: 20,
+                            title: Text(_datetime),
+                            subtitle: Text(data['text']),
+                            /*trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        //TODO Delete the journal entry from firebase
+                      },
+                    ),*/
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }
+                  return Center(
+                    child: Text(
+                      'Tap + icon to add a new journal entry',
+                    ),
+                  );
+                },
               );
-            }).toList(),
-          );
-        },
-      ),
+            }
+            return Text('Loading user...');
+          }),
     );
   }
 }

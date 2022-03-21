@@ -137,10 +137,11 @@ class _RegisterState extends State<Register> {
                                           .add({
                                             'name': _nameTextController.text,
                                           })
-                                          .then(
-                                              (value) => print("Journal Added"))
-                                          .catchError((error) => print(
-                                              "Failed to add journal: $error"));
+                                          .then((value) {})
+                                          .catchError((error) {
+                                            /*print(
+                                              "Failed to add journal: $error");*/
+                                          });
 
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
