@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>-->
    <application
         android:label="voice_journalling"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/config">
         <activity
