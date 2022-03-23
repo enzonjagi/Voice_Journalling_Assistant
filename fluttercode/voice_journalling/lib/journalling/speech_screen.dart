@@ -40,6 +40,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
+  String _posted = '';
   late String date;
   double _confidence = 1.0;
   //check who is the current user
@@ -118,11 +119,19 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 onPressed: () async {
                   //should add data to a new journal entry collection
                   // there's a high chance it will add initial value of _text
+                  if (_date == null) {
+                    _date == DateTime.now();
+                  }
+                  if (_posted == '') {
+                    SnackBar(
+                      content: Text('Please add a recording'),
+                    );
+                  }
                   await _fireStore
                       .collection('journals')
                       .add({
-                        'date': _date,
-                        'text': _text,
+                        'date': DateTime.now(),
+                        'text': _posted,
                         'user_email': user!.email.toString(),
                       })
                       .then((value) => print("Journal Added"))
@@ -151,6 +160,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
+            _posted = _text;
             _date = DateTime.now();
             if (val.hasConfidenceRating && val.confidence > 0) {
               _confidence = val.confidence;
