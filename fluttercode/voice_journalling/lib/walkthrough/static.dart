@@ -10,7 +10,7 @@ List<Map<String, Object>> WALKTHROUGH_ITEMS = [
         text: TextSpan(children: [
       TextSpan(
         text:
-            'Naskuskia is a journalling app designed to help you talk out issues. \n\nThe app leverages the benefits of both journalling and talking out issues.\n\nHere is a run down:',
+            'Nakuskia is a journalling app designed to help you talk out issues. \n\nThe app leverages the benefits of journalling and talking out issues.\n\nHere is a run down:',
         style: TextStyle(
           color: Colors.black,
           fontSize: 20,
@@ -43,7 +43,7 @@ List<Map<String, Object>> WALKTHROUGH_ITEMS = [
         text: TextSpan(children: [
       TextSpan(
         text:
-            'Once a register user, you\'re free to record a new journal . \n\nThe journal can be personal, school or work-related. \n\nSo please, take you time, gather your thoughts, and start recording 👌',
+            'Once a registered user, you\'re free to record a new journal . \n\nThe journal can be personal, school or work-related. \n\nSo please, take you time, gather your thoughts, and start recording 👌',
         style: TextStyle(
           color: Colors.black,
           fontSize: 20,
@@ -76,7 +76,7 @@ List<Map<String, Object>> WALKTHROUGH_ITEMS = [
         text: TextSpan(children: [
       TextSpan(
         text:
-            'Once you\'ve free recorded your journal . \n\nYou will have access to all the recorded journals in textual form. \n\nFeel free to look at your journal and enjoy the experience! 👌',
+            'Once you\'ve recorded your journal . \n\nYou will have access to it and the other recorded journals in textual format. \n\nFeel free to look at your journal and enjoy the experience! 👌',
         style: TextStyle(
           color: Colors.black,
           fontSize: 20,
@@ -86,7 +86,7 @@ List<Map<String, Object>> WALKTHROUGH_ITEMS = [
     'title': RichText(
         text: TextSpan(children: [
       TextSpan(
-        text: 'Revisit old old journals! ',
+        text: 'Revisit your journals! ',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 24,
