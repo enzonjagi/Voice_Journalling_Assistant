@@ -117,8 +117,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
             icon: IconButton(
                 icon: Icon(Icons.save),
                 onPressed: () async {
-                  //should add data to a new journal entry collection
-                  // there's a high chance it will add initial value of _text
+                  //adds data to a new journal entry collection
                   if (_date == null) {
                     _date == DateTime.now();
                   }
@@ -149,6 +148,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
   }
 
   void _listen() async {
+    //listens to audio and converts the speech to text
     if (!_isListening) {
       bool available = await _speech.initialize(
         onStatus: (val) => print('onStatus: $val'),

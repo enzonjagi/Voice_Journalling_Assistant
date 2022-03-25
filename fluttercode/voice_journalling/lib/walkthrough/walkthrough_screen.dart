@@ -10,6 +10,7 @@ class WalkthroughScreen extends StatefulWidget {
 }
 
 class _WalkthroughScreenState extends State<WalkthroughScreen> {
+  //defines the walkthrough screens
   @override
   Widget build(BuildContext context) {
     PageController _controller = PageController(initialPage: 0);

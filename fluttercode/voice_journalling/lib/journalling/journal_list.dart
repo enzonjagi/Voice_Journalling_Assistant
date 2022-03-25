@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:voice_journalling/journalling/sample_journalling.dart';
 import 'package:voice_journalling/journalling/speech_screen.dart';
 import 'package:timeago/timeago.dart';
 
